@@ -1,0 +1,238 @@
+#+TITE
+* Melpa Setup MELPA repos, for installing other Emacs packages.
+#+begin_src emacs-lisp
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(when (not package-archive-contents)
+    (package-refresh-contents))
+
+(package-initialize)
+#+end_src
+* use-package 
+Configure =use-package= to make installing packages easier
+#+begin_src emacs-lisp
+(unless (package-installed-p 'use-package)
+      (package-install 'use-package))
+(setq use-package-always-ensure t)
+#+end_src
+* Evil
+Configure Vim bindings with Evil
+#+begin_src emacs-lisp
+(use-package evil)
+(evil-mode 1)
+#+end_src
+
+* Remove UI bloat, the toolbars and scrollbar
+#+begin_src emacs-lisp
+(scroll-bar-mode -1)
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+#+end_src
+
+* Theming
+Use the Atom One Dark theme
+#+begin_src emacs-lisp
+(use-package atom-one-dark-theme)
+(load-theme 'atom-one-dark t)
+
+
+
+#+end_src
+
+* Org Stuff
+** Indentation
+#+begin_src emacs-lisp
+(org-indent-mode)
+(setq org-startup-indented t)
+(setq org-src-preserve-indentation nil
+      org-src-tab-acts-natively t
+      org-edit-src-content-indentation 0)
+(setq-default indent-tabs-mode nil)
+#+end_src
+** Org Bullets
+UTF-8 Bullets for Org Mode
+
+#+begin_src emacs-lisp  
+(use-package org-bullets)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+#+end_src
+* Ivy/Counsel Completion
+#+begin_src emacs-lisp
+(use-package smex)
+(use-package ivy)
+(use-package counsel)
+(ivy-mode)
+(setq ivy-use-virtual-buffers t)
+(setq enable-recursive-minibuffers t)
+;; enable this if you want `swiper' to use it
+;; (setq search-default-mode #'char-fold-to-regexp)
+;; Remove "^"
+(setq ivy-initial-inputs-alist nil)
+(global-set-key "\C-s" 'swiper)
+(global-set-key (kbd "C-c C-r") 'ivy-resume)
+(global-set-key (kbd "<f6>") 'ivy-resume)
+(global-set-key (kbd "M-x") 'counsel-M-x)
+(global-set-key (kbd "C-x C-f") 'counsel-find-file)
+(global-set-key (kbd "<f1> f") 'counsel-describe-function)
+(global-set-key (kbd "<f1> v") 'counsel-describe-variable)
+(global-set-key (kbd "<f1> o") 'counsel-describe-symbol)
+(global-set-key (kbd "<f1> l") 'counsel-find-library)
+(global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
+(global-set-key (kbd "<f2> u") 'counsel-unicode-char)
+(global-set-key (kbd "C-c g") 'counsel-git)
+(global-set-key (kbd "C-c j") 'counsel-git-grep)
+(global-set-key (kbd "C-c k") 'counsel-ag)
+(global-set-key (kbd "C-x l") 'counsel-locate)
+(global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
+(define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
+#+end_src
+
+* Dashboard
+A dashboard for Emacs
+#+begin_src emacs-lisp
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook))
+(setq dashboard-startup-banner "~/pix/sparkpc.png")
+
+#+end_src
+
+* Keys
+Keybindings
+#+begin_src emacs-lisp
+(use-package general)
+(general-evil-setup t)
+(general-nvmap :prefix "SPC"
+      "f r" 'counsel-recentf)
+#+end_src
+
+* Mode line 
+Mode line - We use Spaceline
+(use-package spaceline)
+(spaceline-spacemacs-theme)
+
+* Magit
+Emacs git client
+#+begin_src emacs-lisp
+(use-package magit)
+#+end_src
+* Src Block auto complete
+Thanks [[https://github.com/daviwil/][System Crafters]] for this snippet
+#+begin_src emacs-lisp
+(require 'org-tempo)
+(add-to-list 'org-structure-template-alist '("sh" . "src sh"))
+(add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+(add-to-list 'org-structure-template-alist '("py" . "src python"))
+#+end_src
+* Line Numbers
+#+begin_src emacs-lisp
+(global-display-line-numbers-mode)
+#+end_src
+* Fonts
+#+begin_src emacs-lisp
+
+(set-face-attribute 'default nil
+  :font "Fantasque Sans Mono"
+  :height 110
+  :weight 'medium)
+(set-face-attribute 'variable-pitch nil
+  :font "JetBrainsMono Nerd Font Mono"
+  :height 120
+  :weight 'medium)
+(set-face-attribute 'fixed-pitch nil
+  :font "Fantasque Sans Mono"
+  :height 110
+  :weight 'medium)
+;; Makes commented text and keywords italics.
+;; This is working in emacsclient but not emacs.
+;; Your font must have an italic face available.
+(set-face-attribute 'font-lock-comment-face nil
+  :slant 'italic)
+(set-face-attribute 'font-lock-keyword-face nil
+  :slant 'italic)
+
+#+end_src
+
+* Org Todo
+#+begin_src emacs-lisp
+(setq org-todo-keywords        ; This overwrites the default Doom org-todo-keywords
+        '((sequence
+           "TODO(t)"           ; A task that is ready to be tackled
+           "BLOG(b)"           ; Blog writing assignments
+           "GYM(g)"            ; Things to accomplish at the gym
+           "PROJ(p)"           ; A project that contains other tasks
+           "VIDEO(v)"          ; Video assignments
+           "WAIT(w)"           ; Something is holding up this task
+           "|"                 ; The pipe necessary to separate "active" states and "inactive" states
+           "DONE(d)"           ; Task has been completed
+           "CANCELLED(c)" )))  ; Task has been cancelled
+#+end_src
+* Code Autocomplete
+
+#+begin_src emacs-lisp
+;; Rust 
+(use-package rust-mode)
+;; Haskell
+(use-package haskell-mode)
+(use-package lsp-haskell)
+;; Clojure
+(use-package clojure-mode)
+(autoload 'rust-mode "rust-mode" nil t)
+(use-package yasnippet)
+(use-package company)
+(use-package lsp-mode
+  :init
+  (setq lsp-keymap-prefix "C-c l")
+  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+         (shell-script-mode . lsp)
+         (python-mode . lsp)
+         (lsp-mode . lsp-enable-which-key-integration))
+  :commands lsp)
+;; Java
+(use-package lsp-java)
+(add-hook 'java-mode-hook #'lsp)
+;; optionally
+(use-package lsp-ui :commands lsp-ui-mode)
+;; if you are helm user
+(use-package helm-lsp :commands helm-lsp-workspace-symbol)
+;; if you are ivy user
+(use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
+(use-package lsp-treemacs :commands lsp-treemacs-errors-list)
+
+;; optionally if you want to use debugger
+(use-package dap-mode)
+;; (use-package dap-LANGUAGE) to load the dap adapter for your language
+
+;; optional if you want which-key integration
+(use-package which-key
+    :config
+    (which-key-mode))
+
+#+end_src
+* New file templates
+#+begin_src emacs-lisp
+
+(defun newhtml ()
+  "Insert a template for an empty HTML page"
+  (interactive)
+  (insert "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n"
+          "<html>\n"
+          "<head>\n"
+          "<title></title>\n"
+          "</head>\n\n"
+          "<body>\n\n"
+          "<h1></h1>\n\n"
+          "<p>\n\n"
+          "</body>\n"
+          "</html>\n")
+  (forward-line -11)
+  (forward-char 7)
+  )
+#+end_src
+
+* Touch Typing
+#+begin_src emacs-lisp
+(use-package speed-type)
+
+#+end_src emacs-lisp

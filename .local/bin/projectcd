@@ -1,0 +1,12 @@
+#!/bin/sh
+choice=$(printf "Dotfiles\nConfigs\nBGDL\nScripts\nLocal Scripts" | fzf)
+
+case "$choice" in
+	Dotfiles) cd ~/projects/dotfiles;;
+	Configs) cd ~/.config;;
+	BGDL) cd ~/projects/bgdl;;
+	Scripts) cd ~/projects/scripts;;
+	"Local Scripts") cd ~/.local/bin;;
+esac
+
+$SHELL
