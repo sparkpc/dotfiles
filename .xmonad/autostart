@@ -1,0 +1,7 @@
+wal -i ~/pix/wallpapers &
+setxkbmap -option caps:swapescape &
+pulseaudio &
+sh ~/walparser.sh &
+xrdb -merge ~/.Xresources &
+picom --experimental-backends --transparent-clipping &
+
