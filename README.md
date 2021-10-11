@@ -7,3 +7,13 @@ git clone http://github.com/sparkpc/dotfiles # Clone dotfiles
 cd dotfiles # Enter dotfiles
 
 git checkout extra # Switch to 'extra' branch
+
+```
+
+# Install Neovim Plugins
+
+```
+nvim
+
+:PlugInstall
+```
