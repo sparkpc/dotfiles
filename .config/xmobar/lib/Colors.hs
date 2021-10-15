@@ -1,0 +1,1 @@
+/home/jack/.cache/wal/colors.hs

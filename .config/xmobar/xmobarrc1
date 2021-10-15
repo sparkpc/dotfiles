@@ -1,0 +1,25 @@
+Config { font    = "xft:Ubuntu:weight=bold:pixelsize=11:antialias=true:hinting=true"
+       , additionalFonts = [ "xft:Mononoki Nerd Font:pixelsize=11:antialias=true:hinting=true"
+                           , "xft:Font Awesome 5 Free Solid:pixelsize=12"
+                           , "xft:Font Awesome 5 Brands:pixelsize=12"
+                           ]
+       , bgColor = "#282c34"
+       , fgColor = "#ff6c6b"
+       , position = Static { xpos = 1920 , ypos = 0, width = 1920, height = 24 }
+       , lowerOnStart = True
+       , hideOnStart = False
+       , allDesktops = True
+       , persistent = True
+       , iconRoot = "/home/jack/.xmonad/"  -- default: "."
+       , commands = [
+      			Run UnsafeStdinReader ,
+			Run Com "/home/jack/.scripts/timedate" [] "times" 1 ,
+			Run Com "/home/jack/.scripts/sbram" [] "sbram" 1 ,
+			Run Com "/home/jack/.scripts/sbdate" [] "sbdate" 1
+                   ] 
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = "<icon=lin.xpm/> | %UnsafeStdinReader% }<box type=VBoth width=1 mb=2 color=#51afef>%sbdate%</box> <box type=VBoth width=1 mb=2 color=#51afef>%times%</box> { <box type=VBoth width=1 mb=2 color=#51afef>%sbram%</box>"
+
+	}
+
