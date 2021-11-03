@@ -1,0 +1,6 @@
+wal -i ~/pix/wallpapers &
+pasystray &
+setxkbmap -option caps:swapescape &
+pulseaudio &
+picom --experimental-backends --transparent-clipping &
+nm-applet &

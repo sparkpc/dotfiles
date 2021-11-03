@@ -23,7 +23,7 @@
   # available, otherwise `xterm-256color` is used.
   #TERM: alacritty
 import:
-  - /home/jack/.config/alacritty/dracula.yml
+  - /home/jack/.config/alacritty/onedark.yaml
 #window:
   # Window dimensions (changes require restart)
   #
@@ -112,7 +112,7 @@ font:
     #   - (macOS) Menlo
     #   - (Linux/BSD) monospace
     #   - (Windows) Consolas
-    family: monospace
+    family: JetBrains Mono Nerd Font Mono
 
     # The `style` can be specified to pick a specific face.
     #style: Regular
@@ -358,7 +358,7 @@ colors:
 #
 # Window opacity as a floating point number from `0.0` to `1.0`.
 # The value `0.0` is completely transparent and `1.0` is opaque.
-background_opacity: 0.9
+background_opacity: 1
 
 #selection:
   # This string contains all characters that are used as separators for
